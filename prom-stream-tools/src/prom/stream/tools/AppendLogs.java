@@ -3,11 +3,7 @@ package prom.stream.tools;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import org.deckfour.xes.in.XMxmlGZIPParser;
-import org.deckfour.xes.in.XMxmlParser;
 import org.deckfour.xes.in.XParser;
-import org.deckfour.xes.in.XesXmlGZIPParser;
-import org.deckfour.xes.in.XesXmlParser;
 import org.deckfour.xes.info.XLogInfo;
 import org.deckfour.xes.info.XLogInfoFactory;
 import org.deckfour.xes.model.XAttributeLiteral;
@@ -22,25 +18,14 @@ import org.deckfour.xes.out.XMxmlSerializer;
 import org.deckfour.xes.out.XSerializer;
 import org.deckfour.xes.out.XesXmlSerializer;
 
+import prom.stream.utils.Utils;
+
 /**
  * Class to merge two logs in to a sequence
  *
  * @author Andrea Burattin
  */
 public class AppendLogs {
-
-	protected static XParser getParser(String name) {
-		if (name.substring(name.length() - 6).equals("xes.gz")) {
-			return new XesXmlGZIPParser();
-		} else if (name.substring(name.length() - 3).equals("xes")) {
-			return new XesXmlParser();
-		} else if (name.substring(name.length() - 4).equals("mxml")) {
-			return new XMxmlParser();
-		} else if (name.substring(name.length() - 7).equals("mxml.gz")) {
-			return new XMxmlGZIPParser();
-		}
-		return new XesXmlParser();
-	}
 
 	public static void main(String args[]) throws Exception {
 		if (args.length != 3) {
@@ -52,8 +37,8 @@ public class AppendLogs {
 		String secondLogFile = args[1];
 		String logDestination = args[2];
 
-		XParser firstParser = getParser(firstLogFile);
-		XParser secondParser = getParser(secondLogFile);
+		XParser firstParser = Utils.getParser(firstLogFile);
+		XParser secondParser = Utils.getParser(secondLogFile);
 
 		XLog firstLog = firstParser.parse(new File(firstLogFile)).get(0);
 		XLog secondLog = secondParser.parse(new File(secondLogFile)).get(0);
