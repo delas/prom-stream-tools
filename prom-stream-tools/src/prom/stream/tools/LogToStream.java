@@ -92,7 +92,7 @@ public class LogToStream {
 		XParser parser = Utils.getParser(logFile);
 		XLog log = parser.parse(new File(logFile)).get(0);
 
-		LogStream stream = logStreamer(log, false, tagBeginningEnd);
+		LogStream stream = logStreamer(log, true, tagBeginningEnd);
 
 		OSXMLConverter converter = new OSXMLConverter();
 		PrintWriter writer = new PrintWriter(destination);
